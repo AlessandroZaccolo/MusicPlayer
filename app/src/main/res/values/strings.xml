@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">MusicPlayer</string>
+    <string name="song_title">tv_title_text</string>
+    <string name="Country">tv_body_text</string>
+    <string name="please_click_on_continue_to_see_our_playlist">Please click on continue to see our playlist</string>
+    <string name="welcome_to_bts_music_player">Welcome to BTS music player</string>
+    <string name="button">button</string>
+    <string name="todo">todo</string>
+    <string name="textview">TextView</string>
 </resources>
