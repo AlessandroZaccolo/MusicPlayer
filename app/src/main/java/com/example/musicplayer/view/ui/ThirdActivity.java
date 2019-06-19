@@ -2,36 +2,48 @@ package com.example.musicplayer.view.ui;
 
 
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.bumptech.glide.Glide;
 import com.example.musicplayer.R;
+import com.example.musicplayer.Utils.Utils;
+import com.example.musicplayer.data.SongItem;
+import com.example.musicplayer.service.MusicPlayerService;
+
+import java.util.List;
 
 
-public class ThirdActivity extends AppCompatActivity implements View.OnClickListener{
+public class ThirdActivity extends AppCompatActivity implements View.OnClickListener {
 
-    String title;
     TextView txView;
-    Button btnPause;
+    ImageView img;
 
-    void initViews(){
+    List<SongItem> songItems = Utils.getSongsData();
+
+    private int getPosition(){
         Intent rcv = getIntent();
-        title = rcv.getStringExtra("song_title");
+
+        return rcv.getIntExtra("song_position", 0);
+
+    }
 
 
-        txView = findViewById(R.id.activity_third__btn__play_or_pause);
 
-        txView.setText(title);
-        
+    public void getIncomingIntent(){
+
+        txView = findViewById(R.id.activity_second__title__song);
+        txView.setText(songItems.get(getPosition()).getSongTitle());
+
+        img = findViewById(R.id.activity_third__song__img);
+        img.setImageResource(this.getResources().getIdentifier(
+                songItems.get(getPosition()).getSongImage(), "drawable", this.getPackageName()));
+
 
     }
 
@@ -41,21 +53,27 @@ public class ThirdActivity extends AppCompatActivity implements View.OnClickList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_third);
 
-        initViews();
-        //getIncomingIntent();
+        getIncomingIntent();
+
+
+
+        Intent intentService = new Intent(this, MusicPlayerService.class);
+        intentService.putExtra("audio", songItems.get(getPosition()).getSongMusic());
+        this.startService(intentService);
 
         Button btnPlay = findViewById(R.id.activity_third__btn__play_or_pause);
+
         btnPlay.setOnClickListener(this);
 
-        /*
-        iconPlay = findViewById(R.id.activity_third___btn__play);
-        iconPlay.setOnClickListener(this);
-        */
+
+
+
 
     }
 
 
 
+    /*
 
     private void getIncomingIntent(){
 
@@ -73,9 +91,11 @@ public class ThirdActivity extends AppCompatActivity implements View.OnClickList
 
     private void setExtras(int songImg, String songTit){
 
+        Log.d("John", "getIncomingIntent");
+
+
         ImageView image = findViewById(R.id.act_3_pic);
         TextView title = findViewById(R.id.activity_second__title__song);
-
 
         Glide.with(this)
                 .asBitmap()
@@ -87,6 +107,8 @@ public class ThirdActivity extends AppCompatActivity implements View.OnClickList
 
     }
 
+    */
+
 
 
 
@@ -95,7 +117,9 @@ public class ThirdActivity extends AppCompatActivity implements View.OnClickList
 
         if(v.getId() == R.id.activity_third__btn__play_or_pause){
 
-
+            Intent intentService = new Intent(this, MusicPlayerService.class);
+            intentService.putExtra("audio", songItems.get(getPosition()).getSongMusic());
+            this.startService(intentService);
 
 
             v.setBackgroundResource(R.drawable.ic_play_arrow);

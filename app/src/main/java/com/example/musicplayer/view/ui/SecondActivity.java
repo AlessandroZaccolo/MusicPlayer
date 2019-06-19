@@ -1,10 +1,12 @@
 package com.example.musicplayer.view.ui;
 
+import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
@@ -18,7 +20,7 @@ import com.example.musicplayer.view.adapter.SongRecycleViewAdapter;
 
 import java.util.List;
 
-public class SecondActivity extends AppCompatActivity {
+public class SecondActivity extends AppCompatActivity implements View.OnClickListener {
 
 
 
@@ -29,14 +31,21 @@ public class SecondActivity extends AppCompatActivity {
 
         List<SongItem> songItems = Utils.getSongsData();
 
+
         final RecyclerView recyclerView = findViewById(R.id.activity_second_rv_data);
         recyclerView.setLayoutManager(new StaggeredGridLayoutManager(1, RecyclerView.VERTICAL));
         recyclerView.setAdapter(new SongRecycleViewAdapter(this, songItems));
 
 
-
-
     }
 
 
+    @Override
+    public void onClick(View v) {
+        if(v.getId() == R.id.activity_second_rv_data){
+            String id = String.valueOf((1234));
+
+            Toast.makeText(this, id, Toast.LENGTH_LONG).show();
+        }
+    }
 }

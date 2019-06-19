@@ -2,7 +2,6 @@ package com.example.musicplayer.view.adapter;
 
 import android.content.Context;
 import android.content.Intent;
-import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,60 +18,18 @@ import com.example.musicplayer.R;
 import com.example.musicplayer.data.SongItem;
 import com.example.musicplayer.service.MusicPlayerService;
 import com.example.musicplayer.view.ui.SecondActivity;
-import com.example.musicplayer.view.ui.SecondFragment;
 import com.example.musicplayer.view.ui.ThirdActivity;
 
 import java.util.List;
 
-public class SongRecycleViewAdapter extends RecyclerView.Adapter<SongRecycleViewAdapter.SongViewHolder> implements MediaPlayer.OnPreparedListener {
+public class SongRecycleViewAdapter extends RecyclerView.Adapter<SongRecycleViewAdapter.SongViewHolder> {
 
     private Context ctx;
     private List<SongItem> songItems;
 
 
-
-
-    class SongViewHolder extends RecyclerView.ViewHolder  implements View.OnClickListener{
-
-
-
-
-        private ImageView songImage;
-        private TextView songTitle;
-        private TextView songCountry;
-        private TextView songDuration;
-        private ItemClickListener clickListener;
-
-
-        public SongViewHolder(@NonNull View itemView){
-            super(itemView);
-
-            this.songImage = itemView.findViewById(R.id.custom__adapter_activity_second__img__song);
-            this.songTitle = itemView.findViewById(R.id.custom_adapter_activity_second__title__song);
-            this.songCountry = itemView.findViewById(R.id.custom_adapter_activity_second__tv__country);
-            this.songDuration = itemView.findViewById(R.id.custom_adapter_activity_second__tv__duration);
-
-            itemView.setTag(this);
-
-        }
-
-
-        public void setClickListener(ItemClickListener itemClickListener) {
-
-            this.clickListener = itemClickListener;
-        }
-
-        @Override
-        public void onClick(View v) {
-            clickListener.onClick(v, getAdapterPosition());
-
-
-        }
-
-
-    }
-
     public SongRecycleViewAdapter(Context context, List<SongItem> objects) {
+
         this.ctx = context;
         this.songItems = objects;
 
@@ -89,68 +46,90 @@ public class SongRecycleViewAdapter extends RecyclerView.Adapter<SongRecycleView
                 .inflate(R.layout.custom_adapter_main,parent, false);
 
 
-        return new SongViewHolder(view);
+        return new SongViewHolder(ctx, songItems, view);
     }
 
 
 
 
-        //holder.bind(items.get(position), listener);
+        //holder.bind(items.get(position), clickListener);
 
         @Override
     public void onBindViewHolder(@NonNull final SongViewHolder holder, int position) {
 
 
+        /*
 
         final int obj = ctx.getResources().getIdentifier(
-                songItems.get(position).getSongImage(),
+                (int) songItems.get(position).getSongImage(),
                 "drawable",
                 ctx.getPackageName());
 
+        */
 
-        holder.songImage.setImageResource(obj);
+
+        holder.songImage.setImageResource(ctx.getResources().getIdentifier(
+                songItems.get(position).getSongImage(),"drawable", ctx.getPackageName()));
         holder.songTitle.setText(songItems.get(position).getSongTitle());
         holder.songCountry.setText(songItems.get(position).getSongCountry());
         holder.songDuration.setText(songItems.get(position).getSongDuration());
-
-            Glide.with(ctx)
-                    .asBitmap()
-                    .load(obj)
-                    .into(holder.songImage);
+    }
 
 
-
-        holder.setClickListener(new ItemClickListener() {
-            @Override
-            public void onClick(View v, int position) {
-
-                Toast.makeText(ctx, "#" + position + " - ", Toast.LENGTH_SHORT).show();
+    class SongViewHolder extends RecyclerView.ViewHolder  implements View.OnClickListener{
 
 
 
-                SecondFragment secondFragment = new SecondFragment();
-                Bundle bundle = new Bundle();
-                bundle.putString("song_title", songItems.get(position).getSongTitle());
-                secondFragment.setArguments(bundle);
-
-                /*
-
-                Intent intentService = new Intent(ctx, MusicPlayerService.class);
-                intentService.putExtra("audio", songItems.get(position).getSongMusic());
-                ctx.startService(intentService);
+        Context ctx;
+        List<SongItem> songItemList;
 
 
+        private ImageView songImage;
+        private TextView songTitle;
+        private TextView songCountry;
+        private TextView songDuration;
 
-                Intent intent = new Intent(ctx, ThirdActivity.class);
-                intent.putExtra("song_image", obj);
-                intent.putExtra("song_title", songItems.get(position).getSongTitle());
+        public SongViewHolder(@NonNull Context context, List<SongItem> songs, View itemView){
+            super(itemView);
 
-                ctx.startActivity(intent);
+            ctx = context;
+            songItemList = songs;
 
-                */
+            this.songImage = itemView.findViewById(R.id.custom__adapter_activity_second__img__song);
+            this.songTitle = itemView.findViewById(R.id.custom_adapter_activity_second__title__song);
+            this.songCountry = itemView.findViewById(R.id.custom_adapter_activity_second__tv__country);
+            this.songDuration = itemView.findViewById(R.id.custom_adapter_activity_second__tv__duration);
 
-            }
-        });
+            itemView.setOnClickListener(this);
+
+        }
+
+
+
+        @Override
+        public void onClick(View v) {
+
+            int itemPosition = getAdapterPosition();
+
+            Toast.makeText(ctx, songItemList.get(itemPosition).getSongTitle(), Toast.LENGTH_SHORT).show();
+
+
+            /*
+            Intent intentService = new Intent(ctx, MusicPlayerService.class);
+            intentService.putExtra("audio", songItems.get(itemPosition).getSongMusic());
+            ctx.startService(intentService);
+
+
+
+
+            Intent intent = new Intent(ctx, ThirdActivity.class);
+            intent.putExtra("song_position", itemPosition);
+            ctx.startActivity(intent);
+            */
+
+        }
+
+
 
 
     }
@@ -159,11 +138,6 @@ public class SongRecycleViewAdapter extends RecyclerView.Adapter<SongRecycleView
     @Override
     public int getItemCount() {
         return songItems.size();
-    }
-
-    @Override
-    public void onPrepared(MediaPlayer mp) {
-        mp.start();
     }
 
 

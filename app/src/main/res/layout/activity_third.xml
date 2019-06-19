@@ -7,7 +7,7 @@
     android:layout_height="match_parent">
 
     <ImageView
-        android:id="@+id/act_3_pic"
+        android:id="@+id/activity_third__song__img"
         android:layout_width="210dp"
         android:layout_height="192dp"
         android:layout_marginTop="16dp"
@@ -28,7 +28,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.511"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/act_3_pic" />
+        app:layout_constraintTop_toBottomOf="@+id/activity_third__song__img" />
 
 
     <LinearLayout

@@ -7,19 +7,14 @@ import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.IBinder;
-import android.widget.Button;
+import android.provider.MediaStore;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
-
-import com.example.musicplayer.R;
-import com.example.musicplayer.Utils.Utils;
-import com.example.musicplayer.data.SongItem;
-
 import java.io.IOException;
-import java.util.List;
 
-public class MusicPlayerService extends Service implements MediaPlayer.OnCompletionListener, MediaPlayer.OnPreparedListener {
+public class MusicPlayerService extends Service implements MediaPlayer.OnCompletionListener, MediaPlayer.OnPreparedListener,
+MediaPlayer.OnInfoListener{
 
     private MediaPlayer mediaPlayerInService;
     private String data;
@@ -39,13 +34,17 @@ public class MusicPlayerService extends Service implements MediaPlayer.OnComplet
 
         data = (String) intent.getExtras().get("audio");
 
+
         if (mediaPlayerInService == null) {
+
+            Toast.makeText(this, "Playing song "+ data, Toast.LENGTH_LONG).show();
+
+
             createAndConfigMediaPlayer(data);
-
-            Toast.makeText(this, "Playing song"+ data, Toast.LENGTH_SHORT).show();
-
         }
         if (mediaPlayerInService.isPlaying()) {
+
+            Toast.makeText(this, "Song is paused", Toast.LENGTH_LONG).show();
 
 
             mediaPlayerInService.stop();
@@ -65,7 +64,7 @@ public class MusicPlayerService extends Service implements MediaPlayer.OnComplet
         mediaPlayerInService.setOnCompletionListener(this);
         final Uri mediaPath = Uri.parse("android.resource://" + getPackageName() + "/raw/" + data);
 
-        Toast.makeText(this, "it is playing"+ mediaPath, Toast.LENGTH_LONG).show();
+        Toast.makeText(this, "it is playing "+ mediaPath, Toast.LENGTH_LONG).show();
         try {
             mediaPlayerInService.setDataSource(getApplicationContext(), mediaPath);
         } catch (IOException e) {
@@ -88,5 +87,10 @@ public class MusicPlayerService extends Service implements MediaPlayer.OnComplet
     @Override
     public void onPrepared(MediaPlayer mp) {
         mp.start();
+    }
+
+    @Override
+    public boolean onInfo(MediaPlayer mp, int what, int extra) {
+        return false;
     }
 }
