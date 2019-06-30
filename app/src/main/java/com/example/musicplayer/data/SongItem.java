@@ -7,13 +7,15 @@ public class SongItem {
     private String songCountry;
     private String songDuration;
     private String songMusic;
+    private String songDetails;
 
-    public SongItem(String songImage, String songTitle, String songCountry, String songDuration, String songMusic) {
+    public SongItem(String songImage, String songTitle, String songCountry, String songDuration, String songMusic, String songDetails) {
         this.songImage = songImage;
         this.songTitle = songTitle;
         this.songCountry = songCountry;
         this.songDuration = songDuration;
         this.songMusic = songMusic;
+        this.songDetails = songDetails;
     }
 
 
@@ -34,6 +36,8 @@ public class SongItem {
     }
 
     public String getSongMusic(){ return songMusic; }
+
+    public String getSongDetails() { return songDetails; }
 
 
 }
