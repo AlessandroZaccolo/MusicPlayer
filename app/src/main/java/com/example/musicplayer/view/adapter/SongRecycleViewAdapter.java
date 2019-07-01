@@ -2,7 +2,6 @@ package com.example.musicplayer.view.adapter;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,12 +12,10 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
 import com.example.musicplayer.R;
 import com.example.musicplayer.data.SongItem;
-import com.example.musicplayer.service.MusicPlayerService;
-import com.example.musicplayer.view.ui.SecondActivity;
-import com.example.musicplayer.view.ui.ThirdActivity;
+import com.example.musicplayer.view.ui.AudioPlayerActivity;
+
 
 import java.util.List;
 
@@ -29,7 +26,6 @@ public class SongRecycleViewAdapter extends RecyclerView.Adapter<SongRecycleView
 
 
     public SongRecycleViewAdapter(Context context, List<SongItem> objects) {
-
         this.ctx = context;
         this.songItems = objects;
 
@@ -52,20 +48,11 @@ public class SongRecycleViewAdapter extends RecyclerView.Adapter<SongRecycleView
 
 
 
-        //holder.bind(items.get(position), clickListener);
 
-        @Override
+
+    @Override
     public void onBindViewHolder(@NonNull final SongViewHolder holder, int position) {
 
-
-        /*
-
-        final int obj = ctx.getResources().getIdentifier(
-                (int) songItems.get(position).getSongImage(),
-                "drawable",
-                ctx.getPackageName());
-
-        */
 
 
         holder.songImage.setImageResource(ctx.getResources().getIdentifier(
@@ -114,18 +101,10 @@ public class SongRecycleViewAdapter extends RecyclerView.Adapter<SongRecycleView
             Toast.makeText(ctx, songItemList.get(itemPosition).getSongTitle(), Toast.LENGTH_SHORT).show();
 
 
-            /*
-            Intent intentService = new Intent(ctx, MusicPlayerService.class);
-            intentService.putExtra("audio", songItems.get(itemPosition).getSongMusic());
-            ctx.startService(intentService);
-
-
-
-
-            Intent intent = new Intent(ctx, ThirdActivity.class);
+            Intent intent = new Intent(ctx, AudioPlayerActivity.class);
             intent.putExtra("song_position", itemPosition);
             ctx.startActivity(intent);
-            */
+
 
         }
 
