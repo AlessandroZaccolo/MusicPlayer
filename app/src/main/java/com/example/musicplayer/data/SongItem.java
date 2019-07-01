@@ -2,6 +2,7 @@ package com.example.musicplayer.data;
 
 public class SongItem {
 
+
     private String songImage;
     private String songTitle;
     private String songCountry;
