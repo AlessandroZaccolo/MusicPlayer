@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
 
         if(v.getId() == R.id.activity_main__btn__see__playlist){
-            Intent intent = new Intent(this, SecondActivity.class);
+            Intent intent = new Intent(this, SongsListActivity.class);
 
             startActivityForResult(intent, 101);
 
