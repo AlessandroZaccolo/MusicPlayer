@@ -9,6 +9,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
@@ -20,8 +22,7 @@ import com.example.musicplayer.view.adapter.SongRecycleViewAdapter;
 
 import java.util.List;
 
-public class SecondActivity extends AppCompatActivity implements View.OnClickListener {
-
+public class SongsListActivity extends AppCompatActivity {
 
 
     @Override
@@ -40,12 +41,4 @@ public class SecondActivity extends AppCompatActivity implements View.OnClickLis
     }
 
 
-    @Override
-    public void onClick(View v) {
-        if(v.getId() == R.id.activity_second_rv_data){
-            String id = String.valueOf((1234));
-
-            Toast.makeText(this, id, Toast.LENGTH_LONG).show();
-        }
-    }
 }
